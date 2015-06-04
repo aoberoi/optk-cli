@@ -1,0 +1,26 @@
+{
+  "name": "optk-cli",
+  "version": "1.0.0",
+  "description": "developer tool for creating opentok sessions and tokens using command line",
+  "preferGlobal": true,
+  "bin": {
+    "optk": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Ankur Oberoi",
+    "email": "aoberoi@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "async": "^1.2.0",
+    "chalk": "^1.0.0",
+    "dotenv": "^1.1.0",
+    "lodash": "^3.9.3",
+    "nomnom": "^1.8.1",
+    "opentok": "^2.2.5",
+    "osenv": "^0.1.1"
+  }
+}
