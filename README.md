@@ -4,7 +4,7 @@ A command line interface developer tool for creating OpenTok sessions and tokens
 
 ## Installation
 
-`npm install optk -g`
+`npm install optk-cli -g`
 
 ## Usage
 

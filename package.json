@@ -1,6 +1,6 @@
 {
   "name": "optk-cli",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "developer tool for creating opentok sessions and tokens using command line",
   "preferGlobal": true,
   "bin": {
