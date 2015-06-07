@@ -1,13 +1,32 @@
 var parser = require('nomnom')();
 var _ = require('lodash');
 var OpenTok = require('opentok');
+var chalk = require('chalk');
 var handleError = require('../lib/error')('session');
-var credentials = require('../opts/credentials');
+var credentialsOptions = require('../opts/credentials');
+var tokenOptions = require('../opts/token');
 
-// TODO: generate token by default and option for no token
-//       include token options
+// jscs:disable maximumLineLength
+var usage = chalk.bold('Usage:') + ' optk session ' + chalk.blue('[options] [credentials]') + '\n' +
+'\n' +
+chalk.blue('Options:') + '\n' +
+'   -p, --relayed                            ' + chalk.gray('create a relayed session  [true]') + '\n' +
+'   -m, --routed                             ' + chalk.gray('create a routed session  [false]') + '\n' +
+'   -l, --location                           ' + chalk.gray('location hint for session (IPv4 address)') + '\n' +
+'   --notoken                                ' + chalk.gray('do not output a token for the given session [false]') + '\n' +
+'   --role publisher|subscriber|moderator    ' + chalk.gray('role for the generated token [publisher]') + '\n' +
+'   -e milliseconds, --expire milliseconds   ' + chalk.gray('expire time from the Unix epoch for the generated token [1 day later]') + '\n' +
+'   -d, --data                               ' + chalk.gray('data for the generated token') + '\n' +
+'\n' +
+chalk.blue('Credentials:') + '\n' +
+'   -k, --key        ' + chalk.gray('An OpenTok API Key') + '\n' +
+'   -s, --secret     ' + chalk.gray('The OpenTok API secret for given key') + '\n';
+
+// jscs:enable maximumLineLength
+
 // TODO: add archive mode
 parser.command('session')
+
   // TODO: don't let this print out false as the default value
   .option('relayed', {
     abbr: 'p',
@@ -24,7 +43,14 @@ parser.command('session')
   .option('location', {
     abbr: 'l',
     type: 'string',
-    help: 'location hint for session'
+    help: 'location hint for session (IPv4 address)'
+  })
+  .option('noToken', {
+    abbr: 'n',
+    full: 'notoken',
+    flag: true,
+    default: false,
+    help: 'do not output a token for the given session'
   })
   .callback(function(opts) {
 
@@ -44,12 +70,28 @@ parser.command('session')
       return val;
     };
 
+    var createTokenOptions = function() {
+      return {
+        expireTime: opts.expire,
+        role: opts.role,
+        data: opts.data
+      };
+    };
+
     var credentialsReady = function() {
       var opentok = new OpenTok(opts.key, opts.secret);
 
       opentok.createSession(createSessionOptions(), function(err, session) {
-        if (err) return handleError(err);
+        if (err) {
+          return handleError(err);
+        }
+
         console.log(session.sessionId);
+
+        if (!opts.noToken) {
+          var token = session.generateToken(createTokenOptions());
+          console.log(token);
+        }
       });
     };
 
@@ -58,8 +100,11 @@ parser.command('session')
     }
 
     if (!opts.key || !opts.secret) {
-      credentials.readDefaults(_.pick(opts, 'key', 'secret'), function(err, creds) {
-        if (err) return handleError(err);
+      credentialsOptions.readDefaults(_.pick(opts, 'key', 'secret'), function(err, creds) {
+        if (err) {
+          return handleError(err);
+        }
+
         _.assign(opts, creds);
         credentialsReady();
       });
@@ -67,9 +112,10 @@ parser.command('session')
       process.nextTick(credentialsReady);
     }
   })
-  .help('create a session');
-
+  .help('create a session')
+  .usage(usage);
 
 // NOTE: uses undocumented/untested API
-_.assign(parser.commands['session'].specs, credentials.specs);
-module.exports = parser.commands['session'];
+_.assign(parser.commands.session.specs, credentialsOptions.specs);
+_.assign(parser.commands.session.specs, tokenOptions.specs);
+module.exports = parser.commands.session;

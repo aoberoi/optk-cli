@@ -9,15 +9,14 @@ module.exports.specs = {
   key: {
     abbr: 'k',
     type: 'string',
-    help: 'An OpenTok API Key',
+    help: 'An OpenTok API Key'
   },
   secret: {
     abbr: 's',
     type: 'string',
-    help: 'The OpenTok API secret for given key',
+    help: 'The OpenTok API secret for given key'
   }
 };
-
 
 module.exports.readDefaults = function(initial, cb) {
 
@@ -26,9 +25,11 @@ module.exports.readDefaults = function(initial, cb) {
     if (process.env.OPTK_KEY) {
       key = process.env.OPTK_KEY;
     }
+
     if (process.env.OPTK_SECRET) {
       secret = process.env.OPTK_SECRET;
     }
+
     process.nextTick(function() {
       cb({
         key: key,
@@ -39,11 +40,15 @@ module.exports.readDefaults = function(initial, cb) {
 
   var readFromHome = function(cb) {
     osenv.home(function(err, home) {
-      if (err) return cb({});
+      if (err) {
+        return cb({});
+      }
 
       fs.readFile(path.join(home, '.optk'), function(err, buf) {
         // if the file doesn't exist or we cannot read it, just return nothing in callback
-        if (err) return cb({});
+        if (err) {
+          return cb({});
+        }
 
         var options = dotenv.parse(buf);
 
@@ -66,16 +71,13 @@ module.exports.readDefaults = function(initial, cb) {
     source(function(creds) {
       callback(null, _.assign(memo, creds));
     });
-  }, function(err, result) {
+  },
+
+  function(err, result) {
     if (!result.key || !result.secret) {
       return cb(new Error('Could not find a key and secret after exhausting defaults'));
     } else {
       return cb(null, result);
     }
   });
-}
-
-// TODO: write out to environment variables, or home directory, or keychain
-module.exports.writeDefaults = function(where, key, secret) {
-
 };

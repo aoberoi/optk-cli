@@ -7,7 +7,10 @@
     "optk": "index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "jshint": "jshint *.js cmds/*.js opts/*.js lib/*.js",
+    "jscs": "jscs *.js cmds/*.js opts/*.js lib/*.js",
+    "verify": "npm run jshint && npm run jscs"
   },
   "author": {
     "name": "Ankur Oberoi",
@@ -22,5 +25,9 @@
     "nomnom": "^1.8.1",
     "opentok": "^2.2.5",
     "osenv": "^0.1.1"
+  },
+  "devDependencies": {
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0"
   }
 }
