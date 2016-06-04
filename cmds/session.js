@@ -14,6 +14,7 @@ chalk.blue('Options:') + '\n' +
 '   -m, --routed                             ' + chalk.gray('create a routed session  [false]') + '\n' +
 '   -l, --location                           ' + chalk.gray('location hint for session (IPv4 address)') + '\n' +
 '   --notoken                                ' + chalk.gray('do not output a token for the given session [false]') + '\n' +
+'   -a, --auto-archive                       ' + chalk.gray('create an automatically archived session [false]') + '\n' +
 '   --role publisher|subscriber|moderator    ' + chalk.gray('role for the generated token [publisher]') + '\n' +
 '   -e milliseconds, --expire milliseconds   ' + chalk.gray('expire time from the Unix epoch for the generated token [1 day later]') + '\n' +
 '   -d, --data                               ' + chalk.gray('data for the generated token') + '\n' +
@@ -40,6 +41,13 @@ parser.command('session')
     default: false,
     help: 'create a routed session'
   })
+  .option('autoArchive', {
+    abbr: 'a',
+    full: 'auto-archive',
+    flag: true,
+    default: false,
+    help: 'create an automatically archived session'
+  })
   .option('location', {
     abbr: 'l',
     type: 'string',
@@ -65,6 +73,13 @@ parser.command('session')
 
       if (opts.location) {
         val.location = opts.location;
+      }
+
+      if (opts.autoArchive) {
+        val.archiveMode = 'always';
+        val.mediaMode = 'routed';
+      } else {
+        val.archiveMode = 'manual';
       }
 
       return val;
