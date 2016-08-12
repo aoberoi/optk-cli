@@ -1,33 +1,37 @@
 {
-  "name": "optk-cli",
-  "version": "0.1.1",
-  "description": "developer tool for creating opentok sessions and tokens using command line",
-  "preferGlobal": true,
-  "bin": {
-    "optk": "index.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "jshint": "jshint *.js cmds/*.js opts/*.js lib/*.js",
-    "jscs": "jscs *.js cmds/*.js opts/*.js lib/*.js",
-    "verify": "npm run jshint && npm run jscs"
-  },
-  "author": {
-    "name": "Ankur Oberoi",
-    "email": "aoberoi@gmail.com"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "async": "^1.2.0",
-    "chalk": "^1.0.0",
-    "dotenv": "^1.1.0",
-    "lodash": "^3.9.3",
-    "nomnom": "^1.8.1",
-    "opentok": "^2.2.5",
-    "osenv": "^0.1.1"
-  },
-  "devDependencies": {
-    "jscs": "^1.13.1",
-    "jshint": "^2.8.0"
-  }
+    "name": "optk-cli",
+    "version": "0.1.1",
+    "description": "developer tool for creating opentok sessions and tokens using command line",
+    "preferGlobal": true,
+    "bin": {
+        "optk": "index.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "jshint": "jshint *.js cmds/*.js opts/*.js lib/*.js",
+        "jscs": "jscs *.js cmds/*.js opts/*.js lib/*.js",
+        "verify": "npm run jshint && npm run jscs"
+    },
+    "author": {
+        "name": "Ankur Oberoi",
+        "email": "aoberoi@gmail.com"
+    },
+    "contributors": [{
+        "name": "Hashir Baqai",
+        "email": "hashirbaqai@gmail.com"
+    }],
+    "license": "MIT",
+    "dependencies": {
+        "async": "^1.2.0",
+        "chalk": "^1.0.0",
+        "dotenv": "^1.1.0",
+        "lodash": "^3.9.3",
+        "nomnom": "^1.8.1",
+        "opentok": "^2.2.5",
+        "osenv": "^0.1.1"
+    },
+    "devDependencies": {
+        "jscs": "^1.13.1",
+        "jshint": "^2.8.0"
+    }
 }
