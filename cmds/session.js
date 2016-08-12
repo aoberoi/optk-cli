@@ -16,7 +16,7 @@ var usage = chalk.bold('Usage:') + ' optk session ' + chalk.blue('[options] [cre
     '   --notoken                                ' + chalk.gray('do not output a token for the given session [false]') + '\n' +
     '   -a, --auto-archive                       ' + chalk.gray('create an automatically archived session [false]') + '\n' +
     '   --role publisher|subscriber|moderator    ' + chalk.gray('role for the generated token [publisher]') + '\n' +
-    '   -e milliseconds, --expire milliseconds   ' + chalk.gray('expire time from the Unix epoch for the generated token [1 day later]') + '\n' +
+    '   -e seconds, --expire seconds             ' + chalk.gray('expire time from the Unix epoch for the generated token [1 day later]') + '\n' +
     '   -d, --data                               ' + chalk.gray('data for the generated token') + '\n' +
     '   -u, --url                                ' + chalk.gray('Specify a custom OpenTok URL endpoint. Use this for dev, nightly, beta, or other environments') + '\n' +
     '\n' +
